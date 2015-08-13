@@ -1,44 +1,7 @@
-// custom
-!function ($) {
-	//fixed
-	$.extend({
-		isIE6: function() {
-			return !-[1, ] && !window.XMLHttpRequest;
-		},
-		getZindex: function() {
-			return parseInt(new Date().getTime() / 1e3);
-		},
-		jqFixed: function(fixedOpt) {
-
-			if ($(fixedOpt.obj).length) var $obj = $(fixedOpt.obj);
-			else return;
-			var ie6 = $.isIE6(),
-				pos = ie6 ? "absolute" : "fixed",
-				$w = $(window),
-				o = $.extend(true, {
-					type: 1,
-					css: {
-						position: "absolute",
-						display: "block"
-					},
-					top: 0
-				}, fixedOpt);
-			if (o.css.bottom >= 0) o.css.top = $w.height() - o.css.bottom - $obj.outerHeight();
-			if (ie6 && o.type) o.css.top += $w.scrollTop();
-			$obj.css(o.css);
-			var T = $obj.offset().top;
-			if (ie6 && o.type) T -= $w.scrollTop();
-			if (o.top) $obj.css("display", "none");
-			$w.on("scroll", function() {
-				var st = $w.scrollTop(),
-					c = st >= o.top;
-				$obj.css({
-					display: c ? "block" : "none",
-					position: st > T ? pos : o.type ? pos : "absolute",
-					top: ie6 ? o.type ? T + st : st > T ? st : T : st > T ? o.type ? T : 0 : T
-				})[c ? 'addClass' : 'removeClass']('j-fixed');
-			});
-			return $obj;
-		}
-	})
-}(jQuery);
+/**
+* author : ahuing
+* date   : 2015-8-7
+* name   : jqfixed v1.0
+* modify : 2015-8-12 10:58:54
+ */
+!function(a){function c(c){return this.each(function(){var d=a(this),e=d.data("jqFixed"),f="object"==typeof c&&c;e||(d.data("jqFixed",e=new b(this,f)),e.init())})}var d,b=function(c,d){this.o=a.extend(!0,{},b.defaults,d),this.$self=a(c)};b.defaults={css:{top:0,zIndex:parseInt((new Date).getTime()/1e3)},top:0,bottom:0,close:".btn-close"},b.prototype={init:function(){if(this.$self.length){var b=this,c=a(window),d=!-[1]&&!window.XMLHttpRequest,e=c.height(),g=(a("body").height(),d?"absolute":"fixed"),h=b.o,i=h.top||b.$self.offset().top,j=b.$self.outerHeight(!0),k=0;h.css.position=h.css.position||b.$self.css("position"),"fixed"!=h.css.position&&(a('<div style="height:'+j+'px"></div>').insertBefore(b.$self),h.css.marginTop=-j),b.$self.find(h.close).click(function(){b.$self.css("display","none"),c.off("scroll.fixed")}),h.css.width=b.$self.width(),h.css.bottom>=0&&(h.css.top=e-h.css.bottom-j,h.css.bottom="auto"),b.$self.css(h.css),c.on("scroll.fixed",function(){var a=c.scrollTop()+(!h.top&&h.css.top||0);b.$self.css(a>=i&&{position:g,display:"block",top:d?a:0,marginTop:h.css.top}||h.css),a>i&&b.$self.trigger("fixed").trigger(a>k?"scrollUp":"scrollDown")||b.$self.trigger("unfixed"),setTimeout(function(){k=a},0)})}}},d=a.fn.jqFixed,a.fn.jqFixed=c,a.fn.jqFixed.Constructor=b,a.fn.jqFixed.noConflict=function(){return a.fn.jqFixed=d,this},a(window).on("load",function(){a(".jqFixed").each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery);
