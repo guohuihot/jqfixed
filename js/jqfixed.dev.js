@@ -15,7 +15,7 @@
             // top : 100
             // , right: 10
             // , display:'none'
-            bottom : 50
+            // bottom : 50
         }
         , fixed : 0
         , margintop : 0
@@ -45,7 +45,7 @@
             o.css.position = o.css.position || _this.$self.css('position');
             isIE6 && o.css.position == 'fixed' && (o.css.position = 'absolute');
             // 先定位 再取top
-            _this.$self.css(o.css);
+            _this.$self.css(o.css).css('display', 'block');
 
             var oft = _this.$self.offset().top;
 
@@ -66,7 +66,6 @@
                 }
                 else o.fixed = oft;
             };
-
             o.css.top = 0;
             o.css.bottom = 'auto';
             // 设置对象的宽
