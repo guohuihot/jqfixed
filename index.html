@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <title>jqfixed_qq客服_客服代码_在线客服_悬浮框_jqduang.com</title>
@@ -60,13 +60,14 @@ for (var i = 0; i < 20; i++) {
 };
 $('body').append(_html);
 $(function () {
-    /*$('.fixediv1').jqFixed({
+    $('.fixediv1').jqFixed({
         fixed: 150
     })
 
     $('.fixediv2').jqFixed({
         fixed: $('.rightcon').offset().top + $('.rightcon').height()
-    })*/
+        , fade : 1
+    })
 
     $('.fixediv3').jqFixed({
         fixed: 200
@@ -75,19 +76,18 @@ $(function () {
             , bottom: 50
             , display: 'none'
         }
-        , margintop: 50
     })
     .click(function () {
         $('html,body').animate({scrollTop: 0})
     });
 
-    /*$('.nav').jqFixed()
+    $('.nav').jqFixed()
     .on('scrollUp', function () {
         $(this).hide();
     })
     .on('scrollDown', function () {
         $(this).show();
-    })*/
+    })
 })
 </script>
 <!--演示内容结束-->

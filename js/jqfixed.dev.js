@@ -2,7 +2,7 @@
 * author : ahuing
 * date   : 2015-8-7
 * name   : jqfixed v1.0
-* modify : 2015-8-12 10:58:54
+* modify : 2015-8-17 09:53:21
  */
 !function ($) {
     var Fixed = function (self, opt) {
@@ -11,15 +11,11 @@
     }
 
     Fixed.defaults = {
-        css : {
-            // top : 100
-            // , right: 10
-            // , display:'none'
-            // bottom : 50
-        }
+        css : {}
         , fixed : 0
         , margintop : 0
         , bottom : 0
+        , fade : 0
         , close : '.btn-close'
     }
 
@@ -43,14 +39,14 @@
             };
             o.css.zIndex = o.css.zIndex || _this.$self.css('z-index');
             o.css.position = o.css.position || _this.$self.css('position');
-            isIE6 && o.css.position == 'fixed' && (o.css.position = 'absolute');
             // 先定位 再取top
-            _this.$self.css(o.css).css('display', 'block');
+            _this.$self.css(o.css);
 
             var oft = _this.$self.offset().top;
 
             if (o.css.position == 'fixed') {
                 o.css.marginTop = fixedcss.marginTop = o.css.bottom >= 0 ? wH - oH - o.css.bottom : oft;
+                o.css.bottom = 'auto';
             }
             else if (o.css.position == 'absolute') {
                 o.css.marginTop = oft;
@@ -66,8 +62,9 @@
                 }
                 else o.fixed = oft;
             };
+
+            isIE6 && o.css.position == 'fixed' && (o.css.position = 'absolute');
             o.css.top = 0;
-            o.css.bottom = 'auto';
             // 设置对象的宽
             o.css.width = o.css.width || _this.$self.width();
             // 设置初始状态
@@ -78,6 +75,13 @@
                 _this.$self.css('display', 'none');
                 $win.off('scroll.fixed');
             });
+
+            o.fade && _this.$self.on('unfixed', function () {
+                _this.$self.one('fixed', function () {
+                    _this.$self.css('display', 'none').animate({opacity:'show'});
+                })
+            })
+
             $win.on('scroll.fixed', function() {
                 var st = $win.scrollTop();
                 fixedcss.top = isIE6 ? st : 0;
