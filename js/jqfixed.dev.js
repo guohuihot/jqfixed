@@ -2,7 +2,7 @@
 * author : ahuing
 * date   : 2015-8-7
 * name   : jqfixed v1.0
-* modify : 2015-8-17 09:53:21
+* modify : 2015-8-20 15:14:57
  */
 !function ($) {
     var Fixed = function (self, opt) {
@@ -12,11 +12,11 @@
 
     Fixed.defaults = {
         css : {}
-        , fixed : 0
-        , margintop : 0
-        , bottom : 0
-        , fade : 0
-        , close : '.btn-close'
+        , fixed : 0 //页面滚动到些位置，才fixed，默认为对象本身的top
+        , margintop : 0//对应偏离顶部的大小，fixed大于对象的top时才有有效，否则如果要设置偏离，请调整fixed的大小
+        , bottom : 0//fixed时相对窗口底部偏离，一般做“返回顶部用”
+        , fade : 0//对象显示时是否有fade效果
+        , close : '.btn-close'//对象内部的关闭按钮的class
     }
 
     Fixed.prototype = {
@@ -82,17 +82,20 @@
                 })
             })
 
-            $win.on('scroll.fixed', function() {
+            var setFixed = function() {
                 var st = $win.scrollTop();
                 fixedcss.top = isIE6 ? st : 0;
                 _this.$self.css(st >= o.fixed && fixedcss || o.css);
 
                 st > o.fixed && 
-                _this.$self.trigger('fixed').trigger(st > t ? 'scrollUp' : 'scrollDown') ||
+                _this.$self.trigger('fixed', [st, oH]).trigger(st > t ? 'scrollUp' : 'scrollDown') ||
                 _this.$self.trigger('unfixed');
 
                 setTimeout(function () {t = st}, 0)
-            })
+            }
+            // 页面加载后先执行一次
+            setFixed();
+            $win.on('scroll.fixed', setFixed)
         }
     }
 
