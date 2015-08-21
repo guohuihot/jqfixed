@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="../css/global.css">
 <!--演示内容开始-->
 <style type="text/css">
-.fixediv1 {width:100px;height:330px;background:#ddd;position: absolute;left: 0;top: 200px;}
+body {padding-top: 50px;}
+.nav {margin-top: -50px;}
+.fixediv {width:100px;height:330px;background:#ddd;position: absolute;left: 0;top: 200px;}
 .con{height:300px; }
-.close{display:block;height:30px;line-height:30px;background:#eee;font-size:14px;padding:0 10px;color:#5e5e5e;text-decoration:none;text-align:center;}
+.btn-close{display:block;height:30px;line-height:30px;background:#eee;font-size:14px;padding:0 10px;color:#5e5e5e;text-decoration:none;text-align:center;}
 .sgang {position: absolute;left: 50%;width:10px;height:2000px;background: #eee;top: 0;z-index: -1;}
 .gang {position: absolute;left: 0;width:100%;height:1px;background: #eee;z-index: -1;text-align: center;}
 </style>
@@ -19,7 +21,7 @@
 <div class="blank20"></div>
 <div class="wrap">
     <nav class="sub-nav cf">
-        <ul>
+        <ul class="jqFixed" style="width:auto" data-css='{"width": 1000}'>
             <li><a class="act" href="#demo">Demo</a></li>
             <li><a href="#howtouse">如何使用</a></li>
             <li><a href="#param">插件参数</a></li>
@@ -28,51 +30,291 @@
             <li><a href="#commus">一起交流</a></li>
         </ul>
     </nav>
-    <div style="padding:10px;width:80%;float:left;height:2000px">
-
-    </div> 
-    <div class="" style="float:right;width:18%">
-        <div class="fixediv2" style="height:200px;background:#ddd;margin-bottom:10px;">
-            当前列显示空白时，浮动当前层
+    <section id="demo" class="page active" style="height: 2000px">
+        <div class="" style="float:right;width:220px">
+            <div class="rightcon" style="height:300px;background:#eee;margin-bottom:10px;"></div>
+            <div class="fixediv2" style="height:200px;background:#ddd;">
+                当前列显示空白时，fixed当前层<br>
+                当到达点评时，不需要fixed
+            </div>
+        </div> 
+        <div class="fixediv1 fixediv">
+            <div class="con">
+                广告内容1<br>
+                直接fixed,top为200
+            </div>
+            <a class="btn-close" href="javascript:;">关闭广告</a>
         </div>
-        <div class="rightcon" style="height:300px;background:#eee;"></div>
-    </div> 
-</div>
-<div class="fixediv1 fixediv">
-    <div class="con">
-        广告内容1<br>
-        滚动到200px开始fixed
-    </div>
-    <a class="close btn-close" href="javascript:;">关闭广告</a>
-</div>
-<div class="fixediv3" style="width: 50px; height: 50px; border: 1px solid #ddd;background:#eee;text-align:center;position:fixed;line-height:24px;cursor:pointer;"> 
-    返回<br/>
-    顶部
-</div>  
-<script src="js/jquery.js"></script>
+        <div class="fixediv4 fixediv">
+            <div class="con">
+                广告内容4<br>
+                滚动到200px开始fixed
+            </div>
+            <a class="btn-close" href="javascript:;">关闭广告</a>
+        </div>
+        <div class="fixediv3" style="width: 50px; height: 50px; border: 1px solid #ddd;background:#eee;text-align:center;position:fixed;line-height:24px;cursor:pointer;display:none"> 
+            返回<br/>
+            顶部
+        </div>  
+    </section> 
+    <section id="howtouse" class="page">
+            <article class="area">
+                <!-- <h2>如何使用</h2> -->
+                <div class="param-instruction">
 
+1. 引入jquery库: 该插件为jquery库的插件, 版本为1.7以上
+<textarea data-language="html"><script type="text/javascript" src="http://你的域名/js/jquery.js"></script></textarea>
+2. 引入插件本身:
+<textarea data-language="html"><script type="text/javascript" src="http://你的域名/js/jqfixed.js"></script></textarea>
+3. 插件启用:
+<h3 class="colde-hd">方式1 : 从dom启用 </h3>
+<textarea data-language="html">
+<div class="jqFixed" data-fixed="150" data-css='{"top": 20, "position": "absolute", "left": 20}'>
+    <div>这里是浮动的内容</div>
+    <div class="btn btn-close">关闭按钮</div>
+</div>
+</textarea>
+<h3 class="colde-hd">方式2 : js调用</h3>
+<textarea data-language="html">
+<div id="fixed">
+    这里是浮动的内容
+    <div class="btn btn-close">关闭按钮</div>
+</div>
+</textarea>
+js代码
+<textarea data-language="javascript">
+$('#fixed').jqFixed({
+    fixed : 150
+    , css : {
+        top: 20
+        , position: 'absolute'
+        , left: 20
+    }
+})
+</textarea>
+                </div>    
+            </article>
+        </section>
+        <section id="param" class="page">
+            <article class="area">
+                <!-- <h2>插件参数</h2> -->
+                <div class="param-detail">
+                    <table cellspacing="1" cellpadding="0">
+                        <tr><td colspan="5">
+<textarea data-language="js">
+$('expr').jqFixed({
+    fixed : 150
+    , css : {
+        top: 20
+        , position: 'absolute'
+        , left: 20
+    }
+})
+//expr是fixed的对象,后面是参数, 具体说明请往下看, 上面只是写了部分参数, 具体的使用需要根据实际情况
+</textarea>
+                        </td></tr>
+                        <tr>
+                            <th>参数</th>
+                            <th>默认值</th>
+                            <th>版本</th>
+                            <th>说明</th>
+                            <th>详细</th>
+                        </tr>
+                        <tr>
+                            <td>fixed</td>
+                            <td>0</td>
+                            <td>1.0</td>
+                            <td><span class="fcr">(必须)</span>对象fixed时的值:<br>
+                                 页面滚动到fixed这个大小时，才fixed，如果不设置fixed的值为对象本身的top<br>
+                                使用: {fixed:150}
+                            </td>
+                            <td><a href="demo.html">效果</a></td>
+                        </tr>
+                        <tr>
+                            <td>margintop</td>
+                            <td>0</td>
+                            <td>1.0</td>
+                            <td>
+
+对象fixed时相对顶部的偏移: <br/>
+仅当fixed大于对象的top时才有有效，否则fixed大于对象的top时，如果要设置偏离，请调整fixed的大小, top - fixed = 偏移<br/>
+例如： 需要偏移顶部（50） 对象本身top（150） fixed应设置为 100;
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>fade</td>
+                            <td>0</td>
+                            <td>1.0</td>
+                            <td>fade效果:<br>
+                                参数: {fade: 0 | 1}<br>
+                                说明： 对象fixed时是否启用fade效果<br>
+                                使用: {fade : 1}
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr><tr>
+                            <td>close</td>
+                            <td>.btn-close</td>
+                            <td>1.0</td>
+                            <td>关闭按钮:<br>
+                                参数: {close: '.btn-close'}<br>
+                                说明：点击对象内部的按钮，关闭当前对象<br>
+                                使用: {close: '.btn-close'}
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>css</td>
+                            <td>json</td>
+                            <td>1.0</td>
+                            <td>对象本身的css:<br>
+                                说明: 值是一个json对象，和jquery方法 $('xx').css(o) 里面的o一样，需要注意的是当设置bottom时，以bottom为主来定位对象，一般做“返回顶部”按钮使用<br><br>
+                                使用: 
+<textarea data-language="js">
+$('expr').jqFixed({
+    css : {
+        top: 20
+        , position: 'absolute'
+        , left: 20
+    }
+})
+</textarea>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>事件</th>
+                            <th>参数</th>
+                            <th>版本</th>
+                            <th>说明</th>
+                            <th>详细</th>
+                        </tr>
+                        <tr>
+                            <td>fixed</td>
+                            <td>(el, st, oh)</td>
+                            <td>1.0</td>
+                            <td>对象fixed时的动作:<br>
+                                说明: el:当前对象，st: window滚动的大小， oh：对象本身的高度
+                                <br>
+                                使用: 当对象fixed，设置其背景为红色
+<textarea data-language="js">
+$('expr').on('fixed', function(){
+    $(this).css('background':'#f00');
+})
+</textarea>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>unfixed</td>
+                            <td>null</td>
+                            <td>1.0</td>
+                            <td>与fixed相反，对象非fixed时的动作:<br>
+                                说明: -
+                                <br>
+                                使用: 当对象fixed，设置其背景为黑色
+<textarea data-language="js">
+$('expr').on('unfixed', function(){
+    $(this).css('background':'#000');
+})
+</textarea>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>scrollUp</td>
+                            <td>null</td>
+                            <td>1.0</td>
+                            <td>页面上滚动时的动作:<br>
+                                说明: -
+                                <br>
+                                使用: 页面上滚动时对象不显示
+<textarea data-language="js">
+$('expr').on('scrollUp', function(){
+    $(this).css('display':'none');
+})
+</textarea>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>scrollDown</td>
+                            <td>null</td>
+                            <td>1.0</td>
+                            <td>页面下滚动时的动作:<br>
+                                说明: -
+                                <br>
+                                使用: 页面下滚动时对象显示
+<textarea data-language="js">
+$('expr').on('scrollUp', function(){
+    $(this).css('display':'block');
+})
+</textarea>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </div>
+            </article>
+        </section>
+        <section id="download" class="page">
+            <article class="area">
+                <!-- <h2>下载插件</h2> -->
+                <div class="">
+                    压缩版本 v1.0 <a href="http://www.jqduang.com/jqfixed/js/jqfixed.js" target="_blank">jqfixed.js</a> (1.96k)
+                </div>
+            </article>
+        </section>
+        <section id="question" class="page">
+            <article class="area">
+                <!-- <h2>常见问题</h2> -->
+                常见问题 
+            </article>
+        </section>
+        <section id="commus" class="page">
+            <div class="blank0"></div>
+        </section>
+</div>
+<div id="dp"></div>
+<script src="js/jquery.js"></script>
 <script src="../js/common.js?201505203"></script>
+<script src="../js/rainbow.min.js?201505203"></script>
 <script src="js/jqfixed.dev.js"></script>
 <script type="text/javascript">
 var _html = '<div class="sgang"></div>';
 for (var i = 0; i < 20; i++) {
     _html += '<div class="gang" style="top:' + (i * 100) + 'px;">' + (i * 100) + 'px</div>';
 };
-$('body').append(_html);
+$('#demo').append(_html);
 $(function () {
     $('.fixediv1').jqFixed({
-        fixed: 150
+        css: {
+            position: 'fixed'
+        }
     })
 
-    $('.fixediv2').jqFixed({
-        fixed: $('.rightcon').offset().top + $('.rightcon').height()
-        , fade : 1
+    $('.fixediv2')
+    .on('fixed', function (el, st, oh) {
+        var nfixed = $('#dp').offset().top - oh
+        $(this).css(st > nfixed ? {
+            position: 'absolute'
+            , top: nfixed
+        } : {
+            position: 'fixed'
+            , top: 0
+        })
+    })
+    .jqFixed({
+        fade : 1
+        , css : {
+            width: 220
+        }
     })
 
     $('.fixediv3').jqFixed({
         fixed: 200
         , css: {
-            right: 30
+            right: 20
             , bottom: 50
             , display: 'none'
         }
@@ -81,12 +323,11 @@ $(function () {
         $('html,body').animate({scrollTop: 0})
     });
 
-    $('.nav').jqFixed()
-    .on('scrollUp', function () {
-        $(this).hide();
-    })
-    .on('scrollDown', function () {
-        $(this).show();
+    $('.fixediv4').jqFixed({
+        fixed: 150
+        , css: {
+            left: 130
+        }
     })
 })
 </script>
