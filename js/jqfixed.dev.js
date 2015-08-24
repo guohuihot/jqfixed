@@ -1,8 +1,8 @@
 /**
 * author : ahuing
 * date   : 2015-8-7
-* name   : jqfixed v1.0
-* modify : 2015-8-20 15:14:57
+* name   : jqfixed v1.01
+* modify : 2015-8-24 11:15:39
  */
 !function ($) {
     var Fixed = function (self, opt) {
@@ -12,9 +12,8 @@
 
     Fixed.defaults = {
         css : {}
-        , fixed : 0 //页面滚动到些位置，才fixed，默认为对象本身的top
+        , fixed : 0 //页面滚动到些位置，才fixed，默认为对象本身的top,如果css.position = 'fixed'，这个是没有用的
         , margintop : 0//对应偏离顶部的大小，fixed大于对象的top时才有有效，否则如果要设置偏离，请调整fixed的大小
-        , bottom : 0//fixed时相对窗口底部偏离，一般做“返回顶部用”
         , fade : 0//对象显示时是否有fade效果
         , close : '.btn-close'//对象内部的关闭按钮的class
     }
@@ -26,8 +25,8 @@
             var _this = this
             , $win    = $(window)
             , isIE6   = !-[1, ] && !window.XMLHttpRequest
-            , wH      = $win.height()
-            , bH      = $('body').height()
+            // , wH      = $win.height()
+            // , bH      = $('body').height()
             , o       = _this.o
             , oH      = _this.$self.outerHeight(true)
             , t       = 0
@@ -35,40 +34,37 @@
                 position : isIE6 ? 'absolute' : 'fixed'
                 , marginTop : 0
                 , display : 'block'
-                , zIndex: parseInt(new Date().getTime() / 1e3)
+                , zIndex : parseInt(new Date().getTime() / 1e3)
             };
             o.css.zIndex = o.css.zIndex || _this.$self.css('z-index');
             o.css.position = o.css.position || _this.$self.css('position');
             // 先定位 再取top
             _this.$self.css(o.css);
 
-            var oft = _this.$self.offset().top;
+            var oft = o.css.marginTop = _this.$self.offset().top;
 
             if (o.css.position == 'fixed') {
-                o.css.marginTop = fixedcss.marginTop = o.css.bottom >= 0 ? wH - oH - o.css.bottom : oft;
+                o.css.marginTop = fixedcss.marginTop = o.css.bottom >= 0 ? $win.height() - oH - o.css.bottom : oft - $win.scrollTop();
                 o.css.bottom = 'auto';
-            }
-            else if (o.css.position == 'absolute') {
-                o.css.marginTop = oft;
+                isIE6 && (o.css.position = 'absolute');
             }
             else {
-                $('<div style="height:' + oH + 'px"></div>').insertBefore(_this.$self);
-                o.css.marginTop = -oH;
-            };
+                if (o.css.position != 'absolute') {
+                    // $('<div style="height:' + oH + 'px"></div>').insertBefore(_this.$self);
+                    _this.$self.before('<div style="height:' + oH + 'px"></div>');
+                    o.css.marginTop = -oH;
+                };
 
-            if (o.css.position != 'fixed') {
                 if (o.fixed) {
                     fixedcss.marginTop = o.fixed > oft ? o.margintop : oft - o.fixed;
                 }
                 else o.fixed = oft;
-            };
+            }
 
-            isIE6 && o.css.position == 'fixed' && (o.css.position = 'absolute');
             o.css.top = 0;
             // 设置对象的宽
             o.css.width = o.css.width || _this.$self.width();
             // 设置初始状态
-
             _this.$self.css(o.css);
             // 点击关闭
             _this.$self.find(o.close).click(function () {
