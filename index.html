@@ -21,7 +21,7 @@ body {padding-top: 50px;}
 <div class="blank20"></div>
 <div class="wrap">
     <nav class="sub-nav cf">
-        <ul class="jqFixed" style="width:auto" data-css='{"width": 1000}'>
+        <ul>
             <li><a class="act" href="#demo">Demo</a></li>
             <li><a href="#howtouse">如何使用</a></li>
             <li><a href="#param">插件参数</a></li>
@@ -137,7 +137,7 @@ $('expr').jqFixed({
                             <td>
 
 对象fixed时相对顶部的偏移: <br/>
-仅当fixed大于对象的top时才有有效，否则fixed大于对象的top时，如果要设置偏离，请调整fixed的大小, top - fixed = 偏移<br/>
+仅当fixed大于对象的top时才有有效，否则fixed小于对象的top时，如果要设置对象偏离顶部，请调整fixed的大小, top - fixed = 偏移<br/>
 例如： 需要偏移顶部（50） 对象本身top（150） fixed应设置为 100;
                             </td>
                             <td>&nbsp;</td>
@@ -329,6 +329,12 @@ $(function () {
             left: 130
         }
     })
+
+    $('.sub-nav')
+    .on('fixed unfixed', function (e) {
+        $(this).width(e.type == 'fixed' ? 1000 : 'auto')
+    })
+    .jqFixed()
 })
 </script>
 <!--演示内容结束-->
