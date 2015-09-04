@@ -21,7 +21,7 @@ body {padding-top: 50px;}
 <div class="blank20"></div>
 <div class="wrap">
     <nav class="sub-nav cf">
-        <ul class="jqFixed" style="width:auto" data-css='{"width": 1000}'>
+        <ul>
             <li><a class="act" href="#demo">Demo</a></li>
             <li><a href="#howtouse">如何使用</a></li>
             <li><a href="#param">插件参数</a></li>
@@ -128,7 +128,7 @@ $('expr').jqFixed({
                                  页面滚动到fixed这个大小时，才fixed，如果不设置fixed的值为对象本身的top<br>
                                 使用: {fixed:150}
                             </td>
-                            <td><a href="demo.html">效果</a></td>
+                            <td><a href="demo.html" target="_blank">实例</a></td>
                         </tr>
                         <tr>
                             <td>margintop</td>
@@ -137,7 +137,7 @@ $('expr').jqFixed({
                             <td>
 
 对象fixed时相对顶部的偏移: <br/>
-仅当fixed大于对象的top时才有有效，否则fixed大于对象的top时，如果要设置偏离，请调整fixed的大小, top - fixed = 偏移<br/>
+仅当fixed大于对象的top时才有有效，否则fixed小于对象的top时，如果要设置对象偏离顶部，请调整fixed的大小, top - fixed = 偏移<br/>
 例如： 需要偏移顶部（50） 对象本身top（150） fixed应设置为 100;
                             </td>
                             <td>&nbsp;</td>
@@ -203,7 +203,7 @@ $('expr').on('fixed', function(){
 })
 </textarea>
                             </td>
-                            <td>&nbsp;</td>
+                            <td><a href="demo2.html" target="_blank">实例</a></td>
                         </tr>
                         <tr>
                             <td>unfixed</td>
@@ -219,7 +219,7 @@ $('expr').on('unfixed', function(){
 })
 </textarea>
                             </td>
-                            <td>&nbsp;</td>
+                            <td><a href="demo2.html" target="_blank">实例</a></td>
                         </tr>
                         <tr>
                             <td>scrollUp</td>
@@ -235,7 +235,7 @@ $('expr').on('scrollUp', function(){
 })
 </textarea>
                             </td>
-                            <td>&nbsp;</td>
+                            <td><a href="demo3.html" target="_blank">实例</a></td>
                         </tr>
                         <tr>
                             <td>scrollDown</td>
@@ -251,7 +251,7 @@ $('expr').on('scrollUp', function(){
 })
 </textarea>
                             </td>
-                            <td>&nbsp;</td>
+                            <td><a href="demo3.html" target="_blank">实例</a></td>
                         </tr>
                     </table>
                 </div>
@@ -261,7 +261,7 @@ $('expr').on('scrollUp', function(){
             <article class="area">
                 <!-- <h2>下载插件</h2> -->
                 <div class="">
-                    压缩版本 v1.0 <a href="http://www.jqduang.com/jqfixed/js/jqfixed.js" target="_blank">jqfixed.js</a> (1.96k)
+                    压缩版本 v1.01 <a href="http://www.jqduang.com/jqfixed/js/jqfixed.js" target="_blank">jqfixed.js</a> (1.88k)
                 </div>
             </article>
         </section>
@@ -279,7 +279,7 @@ $('expr').on('scrollUp', function(){
 <script src="js/jquery.js"></script>
 <script src="../js/common.js?201505203"></script>
 <script src="../js/rainbow.min.js?201505203"></script>
-<script src="js/jqfixed.dev.js"></script>
+<script src="js/jqfixed.js"></script>
 <script type="text/javascript">
 var _html = '<div class="sgang"></div>';
 for (var i = 0; i < 20; i++) {
@@ -329,6 +329,12 @@ $(function () {
             left: 130
         }
     })
+
+    $('.sub-nav')
+    .on('fixed unfixed', function (e) {
+        $(this).width(e.type == 'fixed' ? 1000 : 'auto')
+    })
+    .jqFixed()
 })
 </script>
 <!--演示内容结束-->
