@@ -2,7 +2,7 @@
 * author : ahuing
 * date   : 2015-8-7
 * name   : jqfixed v1.01
-* modify : 2015-8-24 11:15:39
+* modify : 2015-8-24 17:09:53
  */
 !function ($) {
     var Fixed = function (self, opt) {
@@ -83,7 +83,7 @@
                 fixedcss.top = isIE6 ? st : 0;
                 _this.$self.css(st >= o.fixed && fixedcss || o.css);
 
-                st > o.fixed && 
+                st >= o.fixed && 
                 _this.$self.trigger('fixed', [st, oH]).trigger(st > t ? 'scrollUp' : 'scrollDown') ||
                 _this.$self.trigger('unfixed');
 
